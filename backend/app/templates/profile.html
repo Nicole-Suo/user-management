@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="panel">
+  <div class="header">
+    <h2>个人资料</h2>
+    <span class="tag">{{ user.username }}</span>
+  </div>
+
+  <p><strong>邮箱：</strong> {{ user.email }}</p>
+  <p><strong>姓名：</strong> {{ user.full_name }}</p>
+  <p><strong>角色：</strong>
+    {% for role in user.roles %}
+      <span class="badge">{{ role.name }}</span>
+    {% endfor %}
+  </p>
+  <p><strong>权限：</strong></p>
+  <div class="badge-list">
+    {% for permission in user.roles[0].permissions %}
+      <span class="badge">{{ permission.name }}</span>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

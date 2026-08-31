@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="panel">
+  <div class="header">
+    <h2>角色权限</h2>
+    <span class="tag">{{ roles|length }} roles</span>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>角色</th>
+        <th>描述</th>
+        <th>权限</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for role in roles %}
+      <tr>
+        <td>{{ role.name }}</td>
+        <td>{{ role.description or '-' }}</td>
+        <td>
+          <div class="badge-list">
+            {% for permission in role.permissions %}
+              <span class="badge">{{ permission.name }}</span>
+            {% endfor %}
+          </div>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

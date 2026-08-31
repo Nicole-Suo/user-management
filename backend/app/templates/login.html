@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="login-wrapper">
+  <div class="login-card">
+    <h2>登录系统</h2>
+    <p class="muted">使用管理员或普通用户账号登录</p>
+    <form method="post" action="/api/auth/login">
+      <input type="text" name="username" placeholder="用户名" value="admin" required />
+      <input type="password" name="password" placeholder="密码" value="admin123" required />
+      <button type="submit">登录</button>
+    </form>
+    <p class="muted">默认账号：admin / admin123</p>
+  </div>
+</div>
+{% endblock %}

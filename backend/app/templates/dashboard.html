@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="panel">
+  <div class="header">
+    <h2>Dashboard</h2>
+    <span class="tag">欢迎，{{ user.username }}</span>
+  </div>
+
+  <div class="grid">
+    <div class="metric">
+      <div class="label">用户数</div>
+      <div class="value">{{ user.roles|length + 2 }}</div>
+    </div>
+    <div class="metric">
+      <div class="label">角色数</div>
+      <div class="value">3</div>
+    </div>
+    <div class="metric">
+      <div class="label">权限项</div>
+      <div class="value">9</div>
+    </div>
+  </div>
+
+  <p class="muted">当前用户权限：{{ user.permissions if user.permissions else [] }}</p>
+</div>
+{% endblock %}
