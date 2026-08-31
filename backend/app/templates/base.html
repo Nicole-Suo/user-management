@@ -137,7 +137,8 @@
   </head>
   <body>
     <div class="app-shell">
-      {% if user is defined and user.is_authenticated %}
+      {# If this page is embedded in the SPA iframe (embed=1), don't render the backend sidebar #}
+      {% if not request.args.get('embed') and user is defined and user.is_authenticated %}
         <aside class="sidebar">
           <h1>UserMgmt</h1>
           <div class="nav">

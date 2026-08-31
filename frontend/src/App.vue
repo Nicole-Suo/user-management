@@ -43,7 +43,7 @@ export default {
       username: '',
       permissions: [],
       menuItems: [],
-      currentSrc: '/dashboard',
+      currentSrc: '/dashboard?embed=1',
       error: '',
       loginForm: {
         username: 'admin',
@@ -60,15 +60,15 @@ export default {
     },
     buildMenu() {
       const allItems = [
-        { label: '首页', url: '/dashboard', permission: 'dashboard.view' },
-        { label: '用户管理', url: '/users', permission: 'user.read' },
-        { label: '角色权限', url: '/roles', permission: 'role.read' },
-        { label: '个人资料', url: '/profile' }
+        { label: '首页', url: '/dashboard?embed=1', permission: 'dashboard.view' },
+        { label: '用户管理', url: '/users?embed=1', permission: 'user.read' },
+        { label: '角色权限', url: '/roles?embed=1', permission: 'role.read' },
+        { label: '个人资料', url: '/profile?embed=1' }
       ]
 
       this.menuItems = allItems.filter((item) => this.hasPermission(item.permission))
       if (!this.menuItems.length) {
-        this.currentSrc = '/profile'
+        this.currentSrc = '/profile?embed=1'
       }
     },
     setSrc(path) {
