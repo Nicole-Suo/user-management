@@ -27,16 +27,20 @@
       @logout="logout"
     />
     <main class="main-panel">
-      <iframe :src="currentSrc" title="User management content" />
+      <component v-if="currentView === 'users'" :is="Users" />
+      <component v-else-if="currentView === 'roles'" :is="Roles" />
+      <iframe v-else :src="currentSrc" title="User management content" />
     </main>
   </div>
 </template>
 
 <script>
 import Sidebar from './components/Sidebar.vue'
+import Users from './views/Users.vue'
+import Roles from './views/Roles.vue'
 
 export default {
-  components: { Sidebar },
+  components: { Sidebar, Users, Roles },
   data() {
     return {
       loggedIn: false,
@@ -44,6 +48,7 @@ export default {
       permissions: [],
       menuItems: [],
       currentSrc: '/dashboard?embed=1',
+      currentView: null,
       error: '',
       loginForm: {
         username: 'admin',
@@ -60,10 +65,10 @@ export default {
     },
     buildMenu() {
       const allItems = [
-        { label: '首页', url: '/dashboard?embed=1', permission: 'dashboard.view' },
-        { label: '用户管理', url: '/users?embed=1', permission: 'user.read' },
-        { label: '角色权限', url: '/roles?embed=1', permission: 'role.read' },
-        { label: '个人资料', url: '/profile?embed=1' }
+          { label: '首页', url: '/dashboard?embed=1', permission: 'dashboard.view' },
+          { label: '用户管理', url: 'users', permission: 'user.read' },
+          { label: '角色权限', url: 'roles', permission: 'role.read' },
+          { label: '个人资料', url: '/profile?embed=1' }
       ]
 
       this.menuItems = allItems.filter((item) => this.hasPermission(item.permission))
@@ -72,7 +77,15 @@ export default {
       }
     },
     setSrc(path) {
-      this.currentSrc = path
+      // if path starts with '/', treat as iframe URL; else treat as view name
+      if (!path) return
+      if (path.startsWith('/')) {
+        this.currentView = null
+        this.currentSrc = path
+      } else {
+        this.currentView = path
+        this.currentSrc = ''
+      }
     },
     async refreshUser() {
       try {
